@@ -1,5 +1,11 @@
 //1.引入model数据增加操作
-const { register } = require("../model/users");
+const {
+  register,
+  findUserByUserName,
+  findUserInfo,
+} = require("../model/users");
+const { cryptoPassword } = require("../utlis/index");
+const { secret } = require("../config");
 const Joi = require("joi");
 module.exports.register = async (ctx) => {
   // 读取到请求参数
@@ -26,10 +32,47 @@ module.exports.register = async (ctx) => {
     return;
   }
 
+  //查询用户是否已经注册
+  const user = await findUserByUserName(username);
+  //如果已经注册
+  if (user[0]) {
+    ctx.body = {
+      status: 400,
+      message: "当前用户已经注册过了",
+    };
+    return;
+  }
+
   // 操作数据数据模型层 model
-  const result = await register(username, password, mobile);
+  const result = await register(
+    username,
+    cryptoPassword(password + screct),
+    mobile
+  );
   ctx.body = {
     status: 200,
-    msg: "注册成功",
+    message: "注册成功",
   };
+};
+
+//登录
+module.exports.login = async (ctx) => {
+  const { username, password } = ctx.request.body;
+  //再数据库中查询用户信息是否存在
+  const result = await findUserInfo(
+    username,
+    cryptoPassword(password + screct)
+  );
+  //用户是否存在
+  if (result[0]) {
+    ctx.body = {
+      status: 200,
+      message: "登录成功",
+    };
+  } else {
+    ctx.body = {
+      status: 400,
+      message: "登录失败请检查用户名或者密码",
+    };
+  }
 };

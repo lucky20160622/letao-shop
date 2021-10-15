@@ -12,7 +12,7 @@ require("dotenv").config();
 const index = require("./routes/index");
 const users = require("./routes/users");
 const category = require("./routes/category");
-
+const sms = require("./routes/sms");
 // error handler
 onerror(app);
 
@@ -44,6 +44,7 @@ app.use(async (ctx, next) => {
 app.use(index.routes(), index.allowedMethods());
 app.use(users.routes(), users.allowedMethods());
 app.use(category.routes(), category.allowedMethods())
+app.use(sms.routes(), sms.allowedMethods())
 // error-handling
 app.on("error", (err, ctx) => {
   console.error("server error", err, ctx);
