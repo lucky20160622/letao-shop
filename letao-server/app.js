@@ -6,10 +6,13 @@ const onerror = require("koa-onerror");
 const bodyparser = require("koa-bodyparser");
 const logger = require("koa-logger");
 
+//配置信息
+require("dotenv").config();
 //加载路由
 const index = require("./routes/index");
 const users = require("./routes/users");
 const category = require("./routes/category");
+
 // error handler
 onerror(app);
 
@@ -40,7 +43,7 @@ app.use(async (ctx, next) => {
 // routes
 app.use(index.routes(), index.allowedMethods());
 app.use(users.routes(), users.allowedMethods());
-app.use(category.routes(), category.allowedMethods());
+app.use(category.routes(), category.allowedMethods())
 // error-handling
 app.on("error", (err, ctx) => {
   console.error("server error", err, ctx);

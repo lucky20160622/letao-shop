@@ -1,13 +1,11 @@
-const router = require('koa-router')()
+//导入koa-router
+const router = require("koa-router")();
+const { register } = require("../controller/users");
+//前缀
+router.prefix("/users");
 
-router.prefix('/users')
+//路由用户注册
+router.post("/register", register);
 
-router.get('/', function (ctx, next) {
-  ctx.body = 'this is a users response!'
-})
-
-router.get('/bar', function (ctx, next) {
-  ctx.body = 'this is a users/bar response'
-})
-
-module.exports = router
+//导出
+module.exports = router;

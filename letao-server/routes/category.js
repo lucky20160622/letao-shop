@@ -1,7 +1,11 @@
 const router = require("koa-router")();
-const { oneCategory } = require("../controller/category");
+const { oneCategory, twoCategory } = require("../controller/category");
 
-// 获取一级分类
+//一级分类接口
 router.get("/oneCategory", oneCategory);
 
+//二级分类接口
+router.get("/twoCategory", twoCategory);
+
+//导出
 module.exports = router;

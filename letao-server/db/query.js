@@ -1,31 +1,30 @@
 var mysql = require("mysql");
-// 创建连接池
-var pool = mysql.createPool({
-  connectionLimit: 10, // 连接池最大连接数
-  host: "localhost", //主机
-  user: "root", //用户名
-  password: "root", //密码
-  database: "letao", //数据库名
-});
+const { config } = require("./config");
 
-// 开始连接数据
-// 封装sql查询函数
-module.exports.query = (sql) => {
-  return new Promise((resolve, reject) => {
-    // 开始连接数据
+// 配置信息
+const dbConfig = config[process.env.DB_ENV];
+
+// 连接数据库配置信息
+var pool = mysql.createPool(dbConfig);
+
+//  创建连接   sql：sql语句
+module.exports.query = (sql, values) => {
+  return new Promise(function (resolve, reject) {
     pool.getConnection(function (err, connection) {
-      if (err) throw err; // not connected!
+      if (err) throw err; // not connected!  没有连接上
 
-      // Use the connection
-      connection.query(sql, function (error, results, fields) {
-        // When done with the connection, release it.
+      // Use the connection   使用连接 发送sql语句到数据库mysql，mysql中的letaodb数据库会执行sql语句，
+      // 执行结果 在回调函数中参数二返回
+      connection.query(sql, values, function (error, results, fields) {
+        // When done with the connection, release it.   没连接上之拿到返回数据的之后，会把当前连接释放掉
         connection.release();
 
-        // Handle error after the release.
+        // Handle error after the release.  抛出异常
         if (error) throw error;
 
-        // Don't use the connection here, it has been returned to the pool.
         resolve(results);
+
+        // Don't use the connection here, it has been returned to the pool.
       });
     });
   });
