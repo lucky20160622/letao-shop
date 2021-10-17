@@ -4,7 +4,7 @@ const {
   findUserByUserName,
   findUserInfo,
 } = require("../model/users");
-const { cryptoPassword } = require("../utlis/index");
+const { cryptoPassword } = require("../utils/index");
 const { secret } = require("../config");
 const Joi = require("joi");
 module.exports.register = async (ctx) => {

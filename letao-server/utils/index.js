@@ -7,7 +7,7 @@ module.exports.cryptoPassword = (password) => {
 };
 
 //短信发送功能
-module.exports.sendsms = async () => {
+module.exports.sendsms = async (mobile, smscode) => {
   const tencentcloud = require("tencentcloud-sdk-nodejs");
 
   // 导入对应产品模块的client models。
@@ -67,7 +67,7 @@ module.exports.sendsms = async () => {
     /* 模板 ID: 必须填写已审核通过的模板 ID。模板ID可登录 [短信控制台] 查看 */
     TemplateId: process.env.TemplateId,
     /* 模板参数: 若无模板参数，则设置为空*/
-    TemplateParamSet: ["666"],
+    TemplateParamSet: [smscode],
   };
   // 通过client对象调用想要访问的接口，需要传入请求对象以及响应回调函数
   return await client.SendSms(params, function (err, response) {

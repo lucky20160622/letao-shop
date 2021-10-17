@@ -1,7 +1,7 @@
-const { sendsms } = require('../utlis')
+const { sendsms } = require('../controller/sms')
 
-const router=require('kor-router')()
+const router = require('koa-router')()
 
-router.post('/sendsms',sendsms)
+router.post('/sendsms', sendsms)
 
-module.exports=router
+module.exports = router
