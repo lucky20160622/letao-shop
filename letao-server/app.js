@@ -5,7 +5,8 @@ const json = require("koa-json");
 const onerror = require("koa-onerror");
 const bodyparser = require("koa-bodyparser");
 const logger = require("koa-logger");
-
+const jwt = require('koa-jwt')
+const jwtSecret = require('./config/index')
 //配置信息
 require("dotenv").config();
 //加载路由
@@ -17,6 +18,21 @@ const sms = require("./routes/sms");
 onerror(app);
 
 // middlewares
+
+//使用koa-jwt中间件  来拦截 客户端在调用服务器接口时，如果请求头没有设置token 返回401
+app.use(function (ctx, next) {
+  return next().catch((err) => {
+    if (401 == err.status) {
+      ctx.status = 401;
+      ctx.body = 'Protected resource, use Authorization header to get access\n';
+    } else {
+      throw err;
+    }
+  });
+});
+
+//设置哪些接口需要token
+app.use(jwt({ secret: jwtSecret }).unless({ path: [/^\/public/, /^\/register/, /^\/login/] }));
 app.use(
   bodyparser({
     enableTypes: ["json", "form", "text"],

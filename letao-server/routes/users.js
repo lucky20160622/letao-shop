@@ -1,13 +1,14 @@
-//导入koa-router
+//1.导入koa-router
 const router = require("koa-router")();
-const { register, login } = require("../controller/users");
-//前缀
-router.prefix("/users");
 
-//路由用户注册
+//2.导入controller逻辑业务代码
+const { register, login } = require("../controller/users");
+
+//3.路由用户注册
 router.post("/register", register);
 
-//登录
+//4.登录
 router.post("/login", login);
-//导出
+
+//5.导出
 module.exports = router;
