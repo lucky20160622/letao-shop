@@ -5,6 +5,8 @@ const {
   findUserInfo,
 } = require("../model/users");
 const { cryptoPassword } = require("../utils/index");
+const jwt=require('jsonwebtoken')
+
 const { secret } = require("../config");
 const Joi = require("joi");
 module.exports.register = async (ctx) => {
