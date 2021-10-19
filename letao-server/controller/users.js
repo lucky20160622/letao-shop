@@ -12,6 +12,7 @@ const jwt = require('jsonwebtoken')
 
 const { secret, jwtSecret } = require("../config");
 const Joi = require("joi");
+//注册
 module.exports.register = async (ctx) => {
   // 读取到请求参数
   const { username, password, mobile } = ctx.request.body;
@@ -42,6 +43,8 @@ module.exports.register = async (ctx) => {
 
   // //查询用户是否已经注册
   const user = await findUserByUserName(username);
+
+
   //如果已经注册
   if (user[0]) {
     ctx.body = {
@@ -51,7 +54,7 @@ module.exports.register = async (ctx) => {
     return;
   }
 
-  // // 操作数据数据模型层 model
+ // 操作数据数据模型层 model
   const result = await register(
     username,
     cryptoPassword(password + secret),
