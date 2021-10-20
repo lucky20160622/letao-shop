@@ -5,17 +5,17 @@ module.exports.order = async (ctx) => {
   let { body, total_fee, spbill_create_ip, trade_type } = ctx.request.body;
   trade_type = "NATIVE"
   const params = {
-        appid,  
-        mch_id,  // 商户号
-        nonce_str: getRandomStr(), // 32位以内的随机字符串
-        // sign, // 签名
-        body, // 商品描述
-        out_trade_no:outTradeNo(), // 商户订单号
-        total_fee, // 金额
-        spbill_create_ip,  // 终端ip
-        notify_url, // 微信服务器回调的地址
-        trade_type,  // 支付类型
-    }
+    appid,  //公众号id
+    mch_id,  // 商户号
+    nonce_str: getRandomStr(), // 32位以内的随机字符串
+    // sign, // 签名
+    body, // 商品描述
+    out_trade_no: outTradeNo(), // 商户订单号
+    total_fee, // 金额
+    spbill_create_ip,  // 终端ip
+    notify_url, // 微信服务器回调的地址
+    trade_type,  // 支付类型
+  }
   //生成签名，需要发送的参数生成
   const sign = createSign(params)
   //给params添加一个新的属性
@@ -35,6 +35,7 @@ module.exports.order = async (ctx) => {
   <sign>${sign}</sign>
 </xml>
   `
+  //把参数传给controller/order中的carteOrder方法
   const data = await createOrder(orderUrl, sendData)
 
   // 下单成功
