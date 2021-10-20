@@ -6,7 +6,7 @@ module.exports.oneCategory = async (ctx) => {
   const result = await oneCategory();
   // 返回数据
   ctx.body = {
-    status: 200,
+    status: 200,   
     oneCategoryList: result,
   };
 };

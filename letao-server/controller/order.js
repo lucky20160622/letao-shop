@@ -1,19 +1,21 @@
 const { createSign, outTradeNo, getRandomStr, createOrder } = require("../utils/index")
-const { orderUrl } = require('../config/wx')
+const { orderUrl, appid, mch_id, notify_url } = require('../config/wx')
 const QRCode = require('qrcode');
 module.exports.order = async (ctx) => {
-  const { body, total_fee, spbill_create_ip, trade_type } = ctx.request.body;
+  let { body, total_fee, spbill_create_ip, trade_type } = ctx.request.body;
+  trade_type = "NATIVE"
   const params = {
-    appid, //公众号id
-    mch_id,//商户号
-    nonce_str: getRandomStr(),//随机字符串
-    // sign,//签名
-    body,//商品描述
-    out_trade_no: outTradeNo(),//商户订单号
-    total_fee,//标价金额
-    spbill_create_ip,//终端IP
-    trade_type,  // 支付类型
-  }
+        appid,  
+        mch_id,  // 商户号
+        nonce_str: getRandomStr(), // 32位以内的随机字符串
+        // sign, // 签名
+        body, // 商品描述
+        out_trade_no:outTradeNo(), // 商户订单号
+        total_fee, // 金额
+        spbill_create_ip,  // 终端ip
+        notify_url, // 微信服务器回调的地址
+        trade_type,  // 支付类型
+    }
   //生成签名，需要发送的参数生成
   const sign = createSign(params)
   //给params添加一个新的属性

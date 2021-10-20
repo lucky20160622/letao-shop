@@ -110,19 +110,40 @@ module.exports.outTradeNo = () => {
   return this.getRandomStr() + this.getRandomByLength(5)
 }
 
-//生成签名算法
-module.exports.createSign = (args) => {
-  //第一步，设所有发送或者接收到的数据为集合M
-  //将集合M内非空参数值的参数按照参数名ASCII码从小到大排序（字典序）
-  //使用URL键值对的格式（即key1=value&key=value2）
-  let stringA = ''
-  Object.keys(args).sort().forEach(key => {
-    stringA += `${key}=${args[key]}&`
-  })
-  stringA += `&key=${key}`
-  //拼接API密钥
-  return crypto.createHash('MD5').update(stringA).digest('hex').toUpperCase()
-}
+// //生成签名算法
+// module.exports.createSign = (args) => {
+//   //第一步，设所有发送或者接收到的数据为集合M
+//   //将集合M内非空参数值的参数按照参数名ASCII码从小到大排序（字典序）
+//   //使用URL键值对的格式（即key1=value&key=value2）
+//   let stringA = ''
+//   Object.keys(args).sort().forEach(key => {
+//     stringA += `${key}=${args[key]}&`
+//   })
+//   stringA += `key=${key}`
+//   // console.log(stringA)
+//   //拼接API密钥
+//   return crypto.createHash('MD5').update(stringA).digest('hex').toUpperCase()
+// }
+// 生成签名算法
+module.exports.createSign = (args)=>{
+    // 第一步，设所有发送或者接收到的数据为集合M，
+    //  将集合M内非空参数值的参数按照参数名ASCII码从小到大排序（字典序），
+    // 使用URL键值对的格式（即key1=value1&key2=value2…）拼接成字符串stringA。
+    // let stringA = '';
+    // Object.keys(args).sort().forEach(key => {
+    //     stringA += `${key} = ${args[key]}&`;
+    // });
+
+    // stringA += `key=${key}`;
+
+    const stringA = Object.keys(args).sort().reduce((prev, next) => {
+        return  prev +=  `${next}=${args[next]}&`;
+    }, '').concat(`key=${key}`);
+
+    return crypto.createHash('MD5').update(stringA).digest('hex').toUpperCase()
+
+}   
+
 
 //下单
 module.exports.createOrder = (url, params) => {
@@ -132,6 +153,7 @@ module.exports.createOrder = (url, params) => {
       method: 'POST',
       data: params
     })
+    console.log(data.data)
     xml.parseString(data.data, function (err, res) {
       const { return_code, result_code, return_msg } = res.xml;
       if (return_code == 'SUCCESS' && result_code == 'SUCCESS' && return_msg == 'OK') {

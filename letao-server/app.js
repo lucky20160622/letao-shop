@@ -14,26 +14,26 @@ const index = require("./routes/index");
 const users = require("./routes/users");
 const category = require("./routes/category");
 const sms = require("./routes/sms");
-const order=require('./routes/order')
+const order = require('./routes/order')
 // error handler
 onerror(app);
 
 // middlewares
 
 //使用koa-jwt中间件  来拦截 客户端在调用服务器接口时，如果请求头没有设置token 返回401
-app.use(function (ctx, next) {
-  return next().catch((err) => {
-    if (401 == err.status) {
-      ctx.status = 401;
-      ctx.body = 'Protected resource, use Authorization header to get access\n';
-    } else {
-      throw err;
-    }
-  });
-});
+// app.use(function (ctx, next) {
+//   return next().catch((err) => {
+//     if (401 == err.status) {
+//       ctx.status = 401;
+//       ctx.body = 'Protected resource, use Authorization header to get access\n';
+//     } else {
+//       throw err;
+//     }
+//   });
+// });
 
-//设置哪些接口需要token
-app.use(jwt({ secret: jwtSecret }).unless({ path: [/^\/public/, /^\/register/, /^\/login/] }));
+// //设置哪些接口需要token
+// app.use(jwt({ secret: jwtSecret }).unless({ path: [/^\/public/, /^\/register/, /^\/login/] }));
 app.use(
   bodyparser({
     enableTypes: ["json", "form", "text"],
@@ -62,7 +62,7 @@ app.use(index.routes(), index.allowedMethods());
 app.use(users.routes(), users.allowedMethods());
 app.use(category.routes(), category.allowedMethods())
 app.use(sms.routes(), sms.allowedMethods())
-app.use(order.routes(),order.allowedMethods())
+app.use(order.routes(), order.allowedMethods())
 // error-handling
 app.on("error", (err, ctx) => {
   console.error("server error", err, ctx);
