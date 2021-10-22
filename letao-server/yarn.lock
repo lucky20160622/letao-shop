@@ -1653,6 +1653,14 @@ koa-views@^6.2.0:
     mz "^2.4.0"
     pretty "^2.0.0"
 
+koa-xml-body@^2.2.0:
+  version "2.2.0"
+  resolved "https://repo.huaweicloud.com/repository/npm/koa-xml-body/-/koa-xml-body-2.2.0.tgz#593217d09e2fedcc1b34ce71c25df6571e833970"
+  integrity sha512-5I9VyJHgCtXEZKtoeQAqQtIDQydCzMHUz7Sy1nZfnm0FGV6tkB+PeQtIz24icwpi8U67y6LquNuA/JR9f2WZpQ==
+  dependencies:
+    raw-body "^2.4.1"
+    xml2js "^0.4.23"
+
 koa@^2.7.0:
   version "2.13.3"
   resolved "https://repo.huaweicloud.com/repository/npm/koa/-/koa-2.13.3.tgz#a62641ba753ec54bee2c6da1a4f294c5fac35407"
@@ -2303,7 +2311,7 @@ qs@^6.5.2:
   dependencies:
     side-channel "^1.0.4"
 
-raw-body@^2.3.3:
+raw-body@^2.3.3, raw-body@^2.4.1:
   version "2.4.1"
   resolved "https://repo.huaweicloud.com/repository/npm/raw-body/-/raw-body-2.4.1.tgz#30ac82f98bb5ae8c152e67149dac8d55153b168c"
   integrity sha512-9WmIKF6mkvA0SLmA2Knm9+qj89e+j1zqgyn8aXGd7+nAduPoqgI9lO57SAZNn/Byzo5P7JhXTyg9PzaJbH73bA==

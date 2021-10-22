@@ -7,6 +7,7 @@ const bodyparser = require("koa-bodyparser");
 const logger = require("koa-logger");
 const jwt = require('koa-jwt')
 const jwtSecret = require('./config/index')
+const xmlParser = require('koa-xml-body')
 //配置信息
 require("dotenv").config();
 //加载路由
@@ -19,7 +20,7 @@ const order = require('./routes/order')
 onerror(app);
 
 // middlewares
-
+app.use(xmlParser())
 //使用koa-jwt中间件  来拦截 客户端在调用服务器接口时，如果请求头没有设置token 返回401
 // app.use(function (ctx, next) {
 //   return next().catch((err) => {
