@@ -2,7 +2,7 @@
 const router = require("koa-router")()
 
 //2.导入controller逻辑业务代码
-const { order, notify } = require("../controller/order");
+const { order, notify, queryOrder } = require("../controller/order");
 
 //3.微信下单
 router.post("/order", order);
@@ -11,7 +11,7 @@ router.post("/order", order);
 router.post('/pay/notify', notify)
 
 //5.订单查询
-router.post('queryOrder',queryOrder)
+router.post('/queryOrder', queryOrder)
 
 //6.导出
 module.exports = router;
