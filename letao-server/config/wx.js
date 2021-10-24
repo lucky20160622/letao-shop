@@ -14,3 +14,4 @@ module.exports.notify_url = 'http://110.42.199.165:3001/pay/notify';
 
 //  微信订单查询
 module.exports.orderquery = 'https://api.mch.weixin.qq.com/pay/orderquery';
+  
