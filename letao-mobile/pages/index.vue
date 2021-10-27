@@ -7,7 +7,7 @@
     <!-- 3.活动专区组件 -->
     <Activity />
     <!-- 4.运动专区组件 -->
-    <SportList :sportList='sportList'/>
+    <SportList :sportList='sportList' />
   </div>
 </template>
 
@@ -15,15 +15,21 @@
 export default {
   //asyncData刷新页面时,运行在服务端,服务端调用服务端接口不存在跨域
   //跨域是浏览器端的一种安全策略
-  async asyncData({ $axios }) {
+  async asyncData({ $api }) {
     //轮播图接口
-    const { swipeList } = await $axios.$get("/banners");
-    const { gridList } = await $axios.$get("/gridList");
-    const {sportList}=await $axios.$get('/sportList')
+    // const { swipeList } = await $axios.$get("/banners");
+    // const { gridList } = await $axios.$get("/gridList");
+    // const { sportList } = await $axios.$get("/sportList");
+    const [{ swipeList }, { gridList }, { sportList }] = await Promise.all([
+      $api.Swiper(),
+      $api.GridList(),
+      $api.SportList(),
+    ]);
+
     return {
       swipeList,
       gridList,
-      sportList
+      sportList,
     };
   },
 };

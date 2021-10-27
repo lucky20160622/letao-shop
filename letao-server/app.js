@@ -23,7 +23,9 @@ onerror(app);
 app.use(xmlParser())
 //使用koa-jwt中间件  来拦截 客户端在调用服务器接口时，如果请求头没有设置token 返回401
 // app.use(function (ctx, next) {
+//   // console.log(ctx.headers);
 //   return next().catch((err) => {
+//     console.log(err);
 //     if (401 == err.status) {
 //       ctx.status = 401;
 //       ctx.body = 'Protected resource, use Authorization header to get access\n';
@@ -33,8 +35,8 @@ app.use(xmlParser())
 //   });
 // });
 
-// //设置哪些接口需要token
-// app.use(jwt({ secret: jwtSecret }).unless({ path: [/^\/public/, /^\/register/, /^\/login/] }));
+//设置哪些接口需要token
+// app.use(jwt({ secret:  jwtSecret }).unless({ path: [/^\/public/, /^\/register/, /^\/login/] }));
 app.use(
   bodyparser({
     enableTypes: ["json", "form", "text"],

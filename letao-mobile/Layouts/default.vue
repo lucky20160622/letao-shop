@@ -67,7 +67,7 @@ export default {
   watch: {
     //监听路由的变化
     $route() {
-      console.log(this.$route);
+      // console.log(this.$route);
       //设置标题
       this.refHandle();
       //设置高亮

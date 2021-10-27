@@ -16,11 +16,11 @@ const Joi = require("joi");
 module.exports.register = async (ctx) => {
   // 读取到请求参数
   const { username, password, mobile } = ctx.request.body;
-
+  console.log(username, password, mobile);
   //参数校验 是否合法  不合法会返回提示信息 并return退出
   const schema = Joi.object({
     //用户名
-    username: Joi.string().alphanum().min(3).max(12).required(),
+    username: Joi.string().min(3).max(12).required(),
     //密码
     password: Joi.string().pattern(new RegExp("^[a-zA-Z0-9]{3,30}$")),
     //确认密码
@@ -54,12 +54,12 @@ module.exports.register = async (ctx) => {
     return;
   }
 
- // 操作数据数据模型层 model
+  // 操作数据数据模型层 model
   const result = await register(
     username,
     cryptoPassword(password + secret),
     mobile
-  );cryptoPassword
+  ); cryptoPassword
   ctx.body = {
     status: 200,
     message: "注册成功",
