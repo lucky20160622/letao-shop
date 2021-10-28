@@ -60,5 +60,6 @@ export default {
   server: {
     ip: 'localhost', //ip地址或者本地域名的配置
     port: 8080
-  }
+  },
+  loading: '~/components/Loading.vue'
 }

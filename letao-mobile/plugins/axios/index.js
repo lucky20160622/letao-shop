@@ -9,7 +9,7 @@ import { Toast } from "vant";
 export default function ({ $axios,store , redirect }, inject) {
   //4.1请求拦截
   $axios.onRequest(config => {
-    console.log(store.state);
+    // console.log(store.state);
     // 在请求头中要设置 token 
     // 已登录,   
     if (store.state.token) {
