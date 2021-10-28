@@ -22,10 +22,10 @@ module.exports.register = async (ctx) => {
     //用户名
     username: Joi.string().min(3).max(12).required(),
     //密码
-    password: Joi.string().pattern(new RegExp("^[a-zA-Z0-9]{3,30}$")),
+    password: Joi.string().pattern(new RegExp("^[a-zA-Z0-9]{6,20}$")),
     //确认密码
     repeat_password: Joi.ref("password"),
-    mobile: Joi.required()
+    mobile: Joi.string().pattern(/^1(3\d|4[5-9]|5[0-35-9]|6[2567]|7[0-8]|8\d|9[0-35-9])\d{8}$/)
   });
 
   //进行校验
