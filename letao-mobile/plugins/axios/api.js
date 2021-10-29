@@ -37,5 +37,21 @@ export default ({ $request }, inject) => {
     TwoCategory(cid) {
       return $request.$get(`/twoCategory?id=${cid}`);
     },
+    /**
+         * 发送短信
+         * @param {*} mobile  String  手机号
+         * @returns 
+         */
+    SendSmsCode(mobile) {
+      return $request.$post('/sendsms', { mobile })
+    },
+    /**
+        * 注册
+        * @param {*} data 
+        * @returns 
+        */
+    Register(data) {
+      return $request.$post('/register', data);
+    }
   });
 }

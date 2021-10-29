@@ -41,7 +41,14 @@
           >{{SmsBtnText}}</van-button>
         </template>
       </van-field>
-
+      <van-field
+        v-model="smscode"
+        name="smscode"
+        label="验证码"
+        placeholder="请输入验证码"
+        :rules="[{ required: true, message: '请填写验证码' }]"
+      >
+      </van-field>
       <div style="margin: 16px;">
         <van-button
           round
@@ -73,15 +80,23 @@ export default {
       password: "", //密码
       repeatPassword: "", //确认密码
       mobile: "", //手机号
+      smscode: "", //保存用户在页面输入的短信验证码
       checked: true, //复选框状态
       isDisabled: false, //发送短信按钮的可用状态
       SmsBtnText: "发送短信", //发送短信按钮的提示文案
+      smscodeServer: "", //保存用户输入的验证码
     };
   },
 
   methods: {
     //1.发送短信
-    sendsms() {
+    async sendsms() {
+      //校验手机号是否合法
+      let msg = verify.mobile(this.mobile);
+      if (msg) {
+        Toast(msg);
+        return;
+      }
       //2.禁用发送短信按钮可用状态
       this.isDisabled = true;
       //3.定义一个定时器，如果点击发送短信，则30s后才能再次点击
@@ -100,12 +115,19 @@ export default {
           this.smsBtnText = "发送短信";
         }
       }, 1000);
-    },
-    //value是提交表单中所有的数据
-    onSubmit(values) {
-      console.log("submit", values);
 
-      //表单校验
+      // 调用发送短信接口
+      const { data } = await this.$api.SendSmsCode(this.mobile);
+      //保存服务端返回的短信验证码
+      this.smscodeServer = data;
+      console.log(this.smscodeServer);
+    },
+    //1.value是提交表单中所有的数据
+    async onSubmit(values) {
+      console.log("submit", values);
+      //2.是否勾选协议
+      if (!this.checked) Toast("请勾选协议后才能注册");
+      //3.表单校验
       const msg =
         verify.username(this.username) ||
         verify.password(this.password, this.repeatPassword) ||
@@ -115,6 +137,19 @@ export default {
         return;
       }
       console.log(msg);
+      //4.验证验证码短信
+      if (this.smscode !== this.smscodeServer) {
+        Toast("验证码有误");
+        return;
+      }
+      //5.调用注册接口
+      const { status } = await this.$api.Register(values);
+      //是否注册成功
+      if (status == 200) {
+        //注册成功把用户的信息  存在vuex中
+        //跳转登录页面
+        this.$router.push("/my/login");
+      }
     },
   },
 };
