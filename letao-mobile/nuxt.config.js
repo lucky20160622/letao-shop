@@ -24,8 +24,8 @@ export default {
   plugins: [
     '~/plugins/vant',
     '~/plugins/axios',
-    '~/plugins/axios/api'
-
+    '~/plugins/axios/api',
+    '~/plugins/router'
   ],
   modules: [
     '@nuxtjs/axios',

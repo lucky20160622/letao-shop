@@ -4,20 +4,30 @@
 import { httpcode } from "./httpcode";
 //2.引入vant中的toast提示框组件
 import { Toast } from "vant";
-
+const Cookie = require("js-cookie");
 //3.请求和响应拦截
-export default function ({ $axios,store , redirect }, inject) {
+export default function ({ $axios, store, redirect }, inject) {
   //4.1请求拦截
   $axios.onRequest(config => {
-    // console.log(store.state);
+    let ab = Cookie.get("token");
+    console.log(config);
+    if (!ab) {
+      redirect("/my/login");
+      return false
+    }
+
+    console.log('store', store.state);
     // 在请求头中要设置 token 
     // 已登录,   
     if (store.state.token) {
-        // 后端有开启JWT校验, 前端调用接口 需要设置token
-        $axios.setHeader('Authorization', `Bearer ${store.state.token}`);
+      // 后端有开启JWT校验, 前端调用接口 需要设置token
+      $axios.setHeader('Authorization', `Bearer ${store.state.token}`);
+    } else {
+      //退出登录 未登录
+      $axios.setHeader('Authorization', '');
     }
     return config;
-})
+  })
 
 
   //5.响应拦截器
@@ -41,6 +51,8 @@ export default function ({ $axios,store , redirect }, inject) {
       //6.4如果http状态码返回401，则重定向到登录页面
     } else if (code === 401) {
       redirect('/my/login')
+      // 返回成功的promise
+      return Promise.resolve(false);
     }
   })
 

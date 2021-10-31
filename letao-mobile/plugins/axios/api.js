@@ -52,6 +52,14 @@ export default ({ $request }, inject) => {
         */
     Register(data) {
       return $request.$post('/register', data);
-    }
+    },
+    /**
+     * 登录
+     * @param {Object} data  登录请求参数对象
+     * @returns 
+     */
+    Login(data) {
+      return $request.$post('/login', data);
+    },
   });
 }

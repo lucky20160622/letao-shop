@@ -24,7 +24,7 @@ export const verify = {
     }
 
     // 2.3 确认密码是否一直
-    if (pwd !== repeatPwd) {
+    if (arguments.length > 1 && pwd !== repeatPwd) {
       return '两次密码输入不一致';
     }
   },

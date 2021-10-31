@@ -41,6 +41,7 @@
   </div>
 </template>
 <script>
+const Cookie = require("js-cookie");
 export default {
   data() {
     return {
@@ -71,6 +72,11 @@ export default {
       //设置标题
       this.refHandle();
       //设置高亮
+      // let ab = Cookie.get("token");
+      // console.log(ab);
+      // if (!ab) {
+      //   this.$router.push("/my/login");
+      // }
     },
   },
 };

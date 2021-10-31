@@ -91,7 +91,7 @@ module.exports.login = async (ctx) => {
     }, jwtSecret, { expiresIn: '1h' })
     ctx.body = {
       status: 200,
-      data: token,
+      data: { token, username, mobile: result[0].mobile },
       message: "登录成功",
     };
   } else {

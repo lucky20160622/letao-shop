@@ -47,7 +47,11 @@ export default {
     // 读取url中的active参数
     let active = query.active || 0;
     // 按照vant 组件对数据的要求，所以我们需要对返回的数据进行加工处理
-    let { oneCategoryList } = await $api.OneCategory();
+    let { oneCategoryList=[] } = await $api.OneCategory();
+    //判断数据是否正常返回
+    if(!oneCategoryList.length){
+    return;
+    }
     oneCategoryList = oneCategoryList.map((item) => {
       return {
         text: item.categoryName,

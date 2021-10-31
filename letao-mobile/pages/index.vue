@@ -20,7 +20,7 @@ export default {
     // const { swipeList } = await $axios.$get("/banners");
     // const { gridList } = await $axios.$get("/gridList");
     // const { sportList } = await $axios.$get("/sportList");
-    const [{ swipeList }, { gridList }, { sportList }] = await Promise.all([
+    const [{ swipeList=[] }, { gridList=[] }, { sportList=[] }] = await Promise.all([
       $api.Swiper(),
       $api.GridList(),
       $api.SportList(),
