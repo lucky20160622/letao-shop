@@ -79,27 +79,31 @@ module.exports.notify = async (ctx) => {
 
 //微信订单查询
 module.exports.queryOrder = async (ctx) => {
-  const { appid, mch_id, nonce_str, out_trade_no } = ctx.request.body;
+  const { nonce_str, out_trade_no } = ctx.request.body;
   let params = {
     appid,
     mch_id,
-    nonce_str,//32以内的随机字符串
+    nonce_str, // 32位以内的随机字符串,
     out_trade_no
-  }
-  //生成签名
-  let sign = createSign(params)
+  };
+  // 生成签名
+  let sign = createSign(params);
+
   let sendData = `
-  <xml>
-       <appid>${appid}</appid>
-       <mch_id>${mch_id}</mch_id>
-       <nonce_str>${params.nonce_str}</nonce_str>
-       <out_trade_no>${out_trade_no}</out_trade_no>
-       <sign>${sign}</sign>
-  </xml>
-`
+     <xml>
+          <appid>${appid}</appid>
+          <mch_id>${mch_id}</mch_id>
+          <nonce_str>${nonce_str}</nonce_str>
+          <out_trade_no>${out_trade_no}</out_trade_no>
+          <sign>${sign}</sign>
+     </xml>
+  `
+
   const data = await orderHandle(orderquery, sendData);
+
   ctx.body = {
     status: 200,
     data
   }
+
 }

@@ -3,6 +3,7 @@ export default ({ app, redirect }) => {
   app.router.beforeEach((to, from, next) => {
     if (to.path == "/my/login") {
       next()
+      return
     }
 
     let cookie = Cookie.get('token')

@@ -20,7 +20,10 @@
           <p>
             <span class="price">¥{{ item.price }}</span><span class="oldPrice">¥{{ item.oldPrice }}</span>
           </p>
-          <button class="button">立即购买</button>
+          <button
+            class="button"
+            @click="goPay($event,item)"
+          >立即购买</button>
         </div>
       </a>
     </div>
@@ -30,6 +33,15 @@
 <script>
 export default {
   props: ["sportList"],
+  methods: {
+    //去支付
+    goPay(e, product) {
+      //阻止默认行为
+      e.preventDefault();
+      //带参数跳转
+      this.$router.push(`/pay?name=${product.name}&price=${product.price}`);
+    },
+  },
 };
 </script>
 

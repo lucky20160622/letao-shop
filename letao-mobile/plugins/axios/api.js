@@ -61,5 +61,21 @@ export default ({ $request }, inject) => {
     Login(data) {
       return $request.$post('/login', data);
     },
+    /**
+    * 微信下单
+    * @param {Object} data  微信下单请求参数对象
+    * @returns 
+    */
+    Order(data) {
+      return $request.$post('/order', data);
+    },
+    /**
+      * 微信订单查询
+      * @param {Object} data 
+      * @returns 
+      */
+    QueryOrder(data) {
+      return $request.$post('/queryorder', data);
+    }
   });
 }
