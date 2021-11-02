@@ -11,7 +11,7 @@ export const verify = {
     if (!/^[a-zA-Z0-9]{4,20}$/.test(uName.trim())) {
       return '您输入6到20位的用户名'
     }
-  },
+  },   
 
   // 2.校验密码
   password(pwd, repeatPwd) {
